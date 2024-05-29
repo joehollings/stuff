@@ -1,0 +1,46 @@
+name: VDA Office 2013 AO 2.6 SP1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  packer:
+    runs-on: self-hosted
+    name: Packer
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # validate templates
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: "./packer/win10o2013ao26sp1.pkr.hcl"
+
+      # Run init
+      - name: Run init
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          target: "./packer/win10o2013ao26sp1.pkr.hcl"
+
+      # Build Artifact
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort -force"
+          target: "./packer/win10o2013ao26sp1.pkr.hcl"
+        env:
+          PACKER_LOG: 1
+          client_id: ${{ secrets.ARM_CLIENT_ID }}
+          client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
+          subid: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          TenantID: ${{ secrets.ARM_TENANT_ID }}
+          SAStoken: ${{ secrets.SAS_TOKEN }}
+          location: "uk south"
+          managed_image_name: "win10o2013ao26sp1"
+          managed_image_resource_group_name: "packer-rsg-prod"

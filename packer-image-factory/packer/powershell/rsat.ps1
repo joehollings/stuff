@@ -1,0 +1,2 @@
+choco install -y 7zip notepadplusplus.install azcopy10 winget microsoft-windows-terminal
+#Get-WindowsCapability -Name RSAT* -Online | Where-Object state -eq "notpresent" | Add-WindowsCapability -Online

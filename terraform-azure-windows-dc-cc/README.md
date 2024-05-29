@@ -1,0 +1,1 @@
+Terraform module to deploy Domain controllers and Citrix Cloud Conenectors as part of a Azure PaaS deployment.
