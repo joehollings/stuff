@@ -1,0 +1,2 @@
+Update-ExecutionPolicy Unrestricted
+Install-WindowsUpdate -AcceptEula

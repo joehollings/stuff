@@ -1,0 +1,24 @@
+SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS [TableName] INTO #TMPTABLENAMES FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME = 'ServiceHostID' and TABLE_NAME not like '%View'
+
+DECLARE @TableN varchar(255)  
+DECLARE @TSQL varchar(255)
+DECLARE TableCursor CURSOR FOR 
+ 
+SELECT TableName FROM #TMPTABLENAMES
+
+OPEN TableCursor 
+ 
+FETCH NEXT FROM TableCursor INTO @TableN 
+ 
+WHILE @@FETCH_STATUS = 0 
+ 
+BEGIN 
+       SET @TSQL = 'SELECT * FROM ' + @TableN + ' WHERE Uid = ''7'' '
+       EXEC (@TSQL)
+       FETCH NEXT FROM TableCursor INTO @TableN 
+END 
+ 
+CLOSE TableCursor 
+DEALLOCATE TableCursor 
+
+DROP TABLE #TMPTABLENAMES

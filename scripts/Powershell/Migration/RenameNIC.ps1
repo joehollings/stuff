@@ -1,0 +1,1 @@
+Get-NetAdapter | Rename-NetAdapter -NewName "JumpSubnet"

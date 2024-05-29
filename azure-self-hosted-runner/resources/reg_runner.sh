@@ -1,0 +1,2 @@
+#! /bin/bash
+az login --identity && cd /home/githubrunner1/actions-runner && ./config.sh --url https://github.com/OpalwaveSolutions --token $(curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $(az keyvault secret show --vault-name $TOKEN_KEY_VAULT_NAME --name $TOKEN_KEY_VAULT_SECRET_NAME --query value -o tsv)" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/OpalwaveSolutions/actions/runners/registration-token | grep "token" | awk '{print$2}' | tr -d '",') --ephemeral --unattended --name $(hostname) && ./run.sh
