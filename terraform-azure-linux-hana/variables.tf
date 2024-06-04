@@ -135,22 +135,22 @@ variable "subnet_name" {
   default     = ""
 }
 
-variable "tags_application" {
-  type    = string
-  default = "SAP"
-}
+# variable "tags_application" {
+#   type    = string
+#   default = "SAP"
+# }
 
-variable "tags_customer" {
-  type = string
-}
+# variable "tags_customer" {
+#   type = string
+# }
 
-variable "tags_environment" {
-  type = string
-}
+# variable "tags_environment" {
+#   type = string
+# }
 
-variable "tags_project" {
-  type = string
-}
+# variable "tags_project" {
+#   type = string
+# }
 
 variable "zone" {
   description = "Specifies the Availability Zones in which this Linux Virtual Machine should be located"
@@ -158,29 +158,29 @@ variable "zone" {
   default     = ""
 }
 
-# variable "source_image_reference_offer" {
-#   description = "Specifies the offer of the image used to create the virtual machines"
-#   type        = string
-#   default     = "sles-15-sp1-byos"
-# }
+variable "source_image_reference_offer" {
+  description = "Specifies the offer of the image used to create the virtual machines"
+  type        = string
+  default     = "sles-15-sp3-byos"
+}
 
 
 
-# variable "source_image_reference_publisher" {
-#   description = "Specifies the publisher of the image used to create the virtual machines"
-#   type        = string
-#   default     = "SUSE"
-# }
+variable "source_image_reference_publisher" {
+  description = "Specifies the publisher of the image used to create the virtual machines"
+  type        = string
+  default     = "SUSE"
+}
 
 
-# variable "source_image_reference_sku" {
-#   description = "Specifies the SKU of the image used to create the virtual machines"
-#   type        = string
-#   default     = "gen2"
-# }
+variable "source_image_reference_sku" {
+  description = "Specifies the SKU of the image used to create the virtual machines"
+  type        = string
+  default     = "gen2"
+}
 
-# variable "source_image_reference_version" {
-#   description = "Specifies the version of the image used to create the virtual machines"
-#   type        = string
-#   default     = "latest"
-# }
+variable "source_image_reference_version" {
+  description = "Specifies the version of the image used to create the virtual machines"
+  type        = string
+  default     = "latest"
+}

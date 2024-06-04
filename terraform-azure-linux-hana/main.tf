@@ -10,12 +10,12 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = var.private_ip_address_allocation
   }
 
-  tags = {
-    Application = var.tags_application
-    Customer    = var.tags_customer
-    environment = var.tags_environment
-    Project     = var.tags_project
-  }
+  # tags = {
+  #   Application = var.tags_application
+  #   Customer    = var.tags_customer
+  #   environment = var.tags_environment
+  #   Project     = var.tags_project
+  # }
 }
 
 # Create virtual machine
@@ -25,10 +25,10 @@ resource "azurerm_linux_virtual_machine" "this" {
   resource_group_name          = var.resource_group_name
   network_interface_ids        = [azurerm_network_interface.nic.id]
   proximity_placement_group_id = var.proximity_placement_group_id
-  source_image_id              = var.source_image_id
   license_type                 = var.license_type
   size                         = var.size
   zone                         = var.zone
+  #source_image_id              = var.source_image_id
 
   os_disk {
     name                 = "${var.computer_name}-os_disk-01"
@@ -36,19 +36,19 @@ resource "azurerm_linux_virtual_machine" "this" {
     storage_account_type = var.os_disk_storage_account_type
   }
 
-  tags = {
-    Application = var.tags_application
-    Customer    = var.tags_customer
-    environment = var.tags_environment
-    Project     = var.tags_project
-  }
-
-  # source_image_reference {
-  #   publisher = var.source_image_reference_publisher
-  #   offer     = var.source_image_reference_offer
-  #   sku       = var.source_image_reference_sku
-  #   version   = var.source_image_reference_version
+  # tags = {
+  #   Application = var.tags_application
+  #   Customer    = var.tags_customer
+  #   environment = var.tags_environment
+  #   Project     = var.tags_project
   # }
+
+  source_image_reference {
+    publisher = var.source_image_reference_publisher
+    offer     = var.source_image_reference_offer
+    sku       = var.source_image_reference_sku
+    version   = var.source_image_reference_version
+  }
 
   computer_name                   = var.computer_name
   admin_username                  = var.admin_user
@@ -74,12 +74,12 @@ resource "azurerm_managed_disk" "this" {
   disk_size_gb         = lookup(each.value, "size")
   zone                 = azurerm_linux_virtual_machine.this.zone
 
-  tags = {
-    Application = var.tags_application
-    Customer    = var.tags_customer
-    environment = var.tags_environment
-    Project     = var.tags_project
-  }
+  # tags = {
+  #   Application = var.tags_application
+  #   Customer    = var.tags_customer
+  #   environment = var.tags_environment
+  #   Project     = var.tags_project
+  # }
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "this" {
