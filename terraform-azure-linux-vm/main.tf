@@ -37,7 +37,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   admin_password                  = var.admin_password
   disable_password_authentication = var.disable_password_authentication
   custom_data = base64encode(templatefile("${path.module}/${var.install_script}", {
-    host_name = var.computer_name
+    host_name    = var.computer_name
     github_token = var.github_token
   }))
 }

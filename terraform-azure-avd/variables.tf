@@ -16,34 +16,34 @@ variable "workspace" {
 }
 
 variable "workspace_description" {
-  type = string
+  type        = string
   description = "Description of the Azure Virtual Desktop workspace"
 }
 
 variable "workspace_friendlyname" {
-  type = string
+  type        = string
   description = "Friendly name of the Azure Virtual Desktop workspace"
 }
 
 variable "dag_type" {
-  type = string
+  type        = string
   description = "(Required) Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop application groups. Changing this forces a new resource to be created."
-  default = "Desktop"
+  default     = "Desktop"
 }
 
 variable "dag_name" {
-  type = string
+  type        = string
   description = "(Required) The name of the Virtual Desktop Application Group. Changing the name forces a new resource to be created."
-  default = "${var.prefix}-dag"
+  default     = "${var.prefix}-dag"
 }
 
 variable "dag_friendlyname" {
-  type = string
+  type        = string
   description = "(Optional) Option to set a friendly name for the Virtual Desktop Application Group."
 }
 
 variable "dag_description" {
-  type = string
+  type        = string
   description = "(Optional) Option to set a description for the Virtual Desktop Application Group."
 }
 

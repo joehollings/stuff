@@ -1,7 +1,7 @@
 variable "allow_gateway_transit" {
-  type = string
+  type        = string
   description = "(Optional) Controls gatewayLinks can be used in the remote virtual network’s link to the local virtual network. Defaults to false."
-  default = "True"
+  default     = "True"
 }
 
 variable "location" {

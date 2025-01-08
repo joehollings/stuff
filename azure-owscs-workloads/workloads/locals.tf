@@ -13,10 +13,10 @@ locals {
 
   beacon_servers = {
     azcsfbs01 = {
-      subnet_name                  = data.azurerm_subnet.snet-sharedresources.name
-      subnet_id                    = data.azurerm_subnet.snet-sharedresources.id
-      size                         = "Standard_D2s_v5"
-      zone                         = "1"
+      subnet_name = data.azurerm_subnet.snet-sharedresources.name
+      subnet_id   = data.azurerm_subnet.snet-sharedresources.id
+      size        = "Standard_D2s_v5"
+      zone        = "1"
       disks = {
         data = {
           name                 = "-data_01"

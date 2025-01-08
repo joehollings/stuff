@@ -66,7 +66,7 @@ resource "azurerm_local_network_gateway" "this" {
   gateway_address     = var.gateway_address
   address_space       = var.gateway_address_space
 
-    tags = {
+  tags = {
     Customer    = var.tags_customer
     environment = var.tags_environment
     Project     = var.tags_project

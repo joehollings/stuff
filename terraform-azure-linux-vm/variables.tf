@@ -154,6 +154,6 @@ variable "install_script" {
 
 variable "github_token" {
   description = "Github runner token"
-  type = string
-  default = "token"
+  type        = string
+  default     = "token"
 }

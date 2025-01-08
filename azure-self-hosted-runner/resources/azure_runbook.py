@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-import automationassets
+import automationassets # type: ignore
 import random
 import uuid
 import requests

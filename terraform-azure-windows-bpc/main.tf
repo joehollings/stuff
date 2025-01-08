@@ -92,7 +92,7 @@ resource "azurerm_backup_protected_vm" "this" {
 }
 
 resource "azurerm_virtual_machine_extension" "join-domain" {
-  depends_on = [ azurerm_virtual_machine_extension.Configure ]
+  depends_on           = [azurerm_virtual_machine_extension.Configure]
   name                 = "join-domain"
   publisher            = "Microsoft.Compute"
   type                 = "JsonADDomainExtension"
@@ -123,10 +123,10 @@ resource "azurerm_virtual_machine_extension" "Configure" {
   type                       = "CustomScriptExtension"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
-  settings = <<SETTINGS
+  settings                   = <<SETTINGS
   {
     "commandToExecute": "powershell.exe -Command \"${local.powershell_command}\""
   }
 SETTINGS
-    
+
 }

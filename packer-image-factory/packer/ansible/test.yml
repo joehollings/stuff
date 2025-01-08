@@ -1,0 +1,115 @@
+---
+- name: Test System Setup
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Register System
+      command: SUSEConnect -s
+      register: result
+      changed_when: false
+      failed_when: "'\"subscription_status\":\"ACTIVE\"' not in result.stdout"
+      ignore_errors: yes
+
+    - name: Set timezone
+      timezone:
+        name: Etc/UTC
+
+    - name: Configure storage
+      block:
+        - name: Configure /usr/sap
+          filesystem:
+            fstype: ext4
+            dev: /dev/sdb
+            opts: defaults
+          when: not ansible_facts['mounts']['/usr/sap'] is defined
+
+        - name: Configure /hana/shared
+          filesystem:
+            fstype: ext4
+            dev: /dev/sdc
+            opts: defaults
+          when: not ansible_facts['mounts']['/hana/shared'] is defined
+
+        - name: Configure /hana/data
+          command: mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sd[ef]
+          when: not ansible_facts['mounts']['/hana/data'] is defined
+
+        - name: Configure /hana/log
+          command: mdadm --create --verbose /dev/md1 --level=1 --raid-devices=2 /dev/sd[gh]
+          when: not ansible_facts['mounts']['/hana/log'] is defined
+
+    - name: Mount data drives
+      block:
+        - name: Mount /usr/sap
+          mount:
+            path: /usr/sap
+            src: /dev/sdb
+            fstype: ext4
+            opts: defaults
+            state: mounted
+          when: not ansible_facts['mounts']['/usr/sap'] is defined
+
+        - name: Mount /hana/shared
+          mount:
+            path: /hana/shared
+            src: /dev/sdc
+            fstype: ext4
+            opts: defaults
+            state: mounted
+          when: not ansible_facts['mounts']['/hana/shared'] is defined
+
+        - name: Mount /hana/data
+          mount:
+            path: /hana/data
+            src: /dev/md0
+            fstype: ext4
+            opts: defaults
+            state: mounted
+          when: not ansible_facts['mounts']['/hana/data'] is defined
+
+        - name: Mount /hana/log
+          mount:
+            path: /hana/log
+            src: /dev/md1
+            fstype: ext4
+            opts: defaults
+            state: mounted
+          when: not ansible_facts['mounts']['/hana/log'] is defined
+
+    - name: Ensure fstab entries
+      block:
+        - name: Ensure /usr/sap in fstab
+          mount:
+            path: /usr/sap
+            src: /dev/sdb
+            fstype: ext4
+            opts: defaults
+            state: present
+          when: not ansible_facts['mounts']['/usr/sap'] is defined
+
+        - name: Ensure /hana/shared in fstab
+          mount:
+            path: /hana/shared
+            src: /dev/sdc
+            fstype: ext4
+            opts: defaults
+            state: present
+          when: not ansible_facts['mounts']['/hana/shared'] is defined
+
+        - name: Ensure /hana/data in fstab
+          mount:
+            path: /hana/data
+            src: /dev/md0
+            fstype: ext4
+            opts: defaults
+            state: present
+          when: not ansible_facts['mounts']['/hana/data'] is defined
+
+        - name: Ensure /hana/log in fstab
+          mount:
+            path: /hana/log
+            src: /dev/md1
+            fstype: ext4
+            opts: defaults
+            state: present
+          when: not ansible_facts['mounts']['/hana/log'] is defined

@@ -84,14 +84,14 @@ $SPN_SSO_Dev_FQDN = "HTTP/az" + $CustomerNumber + $SAP_SID_Dev + "sap01." + $Dom
 
 # QAS ---------------------------------------------------------------------------------
 
-# $SAP_Global_Admin_QAS = "SAP_" + $SAP_SID_QAS + "_GlobalAdmin"
-# $SAP_Service_QAS = "SAPService" + $SAP_SID_QAS
-# $SAP_ADM_QAS = $SAP_SID_QAS + "adm"
-# $SAP_SSO_QAS = "SL-ABAP-" + $SAP_SID_QAS
-# $SPN_SSO_QAS_ABAP = "SAP/SL-ABAP-" + $SAP_SID_QAS
-# $SPN_SSO_QAS_Hostname = "HTTP/az" + $CustomerNumber + $SAP_SID_QAS + "sap01"
-# $SPN_SSO_QAS_FQDN = "HTTP/az" + $CustomerNumber + $SAP_SID_QAS + "sap01." + $DomainName
-# $SAP_SSO_Prod = "SL-ABAP-" + $SAP_SID_Prod
+$SAP_Global_Admin_QAS = "SAP_" + $SAP_SID_QAS + "_GlobalAdmin"
+$SAP_Service_QAS = "SAPService" + $SAP_SID_QAS
+$SAP_ADM_QAS = $SAP_SID_QAS + "adm"
+$SAP_SSO_QAS = "SL-ABAP-" + $SAP_SID_QAS
+$SPN_SSO_QAS_ABAP = "SAP/SL-ABAP-" + $SAP_SID_QAS
+$SPN_SSO_QAS_Hostname = "HTTP/az" + $CustomerNumber + $SAP_SID_QAS + "sap01"
+$SPN_SSO_QAS_FQDN = "HTTP/az" + $CustomerNumber + $SAP_SID_QAS + "sap01." + $DomainName
+$SAP_SSO_Prod = "SL-ABAP-" + $SAP_SID_Prod
 
 # Prod ----------------------------------------------------------------------------------
 
@@ -125,21 +125,21 @@ Add-ADGroupMember -Identity $SAP_Global_Admin_Dev -Members $SAP_ADM_Dev,$SAP_Ser
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # QAS Service accounts ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# $UPN = $SAP_Service_QAS + "@$DomainName"
-# $Description = "SAP QAS System Service Account"
-# New-ADUser -Name $SAP_Service_QAS -DisplayName $SAP_Service_QAS -SamAccountName $SAP_Service_QAS -UserPrincipalName $UPN -Description $Description -AccountPassword $SID2 -PasswordNeverExpires $true -Enabled $true 
+$UPN = $SAP_Service_QAS + "@$DomainName"
+$Description = "SAP QAS System Service Account"
+New-ADUser -Name $SAP_Service_QAS -DisplayName $SAP_Service_QAS -SamAccountName $SAP_Service_QAS -UserPrincipalName $UPN -Description $Description -AccountPassword $SID2 -PasswordNeverExpires $true -Enabled $true 
 
-# $UPN = $SAP_ADM_QAS + "@$DomainName"
-# $Description = "SAP Test System ADM Account"
-# New-ADUser -Name $SAP_ADM_QAS -DisplayName $SAP_ADM_QAS -SamAccountName $SAP_ADM_QAS -UserPrincipalName $UPN -Description $Description -AccountPassword $SID2 -PasswordNeverExpires $true -Enabled $true 
+$UPN = $SAP_ADM_QAS + "@$DomainName"
+$Description = "SAP Test System ADM Account"
+New-ADUser -Name $SAP_ADM_QAS -DisplayName $SAP_ADM_QAS -SamAccountName $SAP_ADM_QAS -UserPrincipalName $UPN -Description $Description -AccountPassword $SID2 -PasswordNeverExpires $true -Enabled $true 
 
-# $UPN = $SAP_SSO_QAS + "@$DomainName"
-# $Description = "SAP QAS System SSO Service account"
-# $UserOU = "OU=Service Account,OU=Users,$Path"
-# New-ADUser -Name $SAP_SSO_QAS -DisplayName $SAP_SSO_QAS -SamAccountName $SAP_SSO_QAS -UserPrincipalName $UPN -Description $Description -AccountPassword $SID2 -PasswordNeverExpires $true -Enabled $true -ServicePrincipalNames $SPN_SSO_QAS_ABAP, $SPN_SSO_QAS_Hostname, $SPN_SSO_QAS_FQDN
+$UPN = $SAP_SSO_QAS + "@$DomainName"
+$Description = "SAP QAS System SSO Service account"
+$UserOU = "OU=Service Account,OU=Users,$Path"
+New-ADUser -Name $SAP_SSO_QAS -DisplayName $SAP_SSO_QAS -SamAccountName $SAP_SSO_QAS -UserPrincipalName $UPN -Description $Description -AccountPassword $SID2 -PasswordNeverExpires $true -Enabled $true -ServicePrincipalNames $SPN_SSO_QAS_ABAP, $SPN_SSO_QAS_Hostname, $SPN_SSO_QAS_FQDN
 
-# New-ADGroup -Name $SAP_Global_Admin_QAS -GroupCategory Security -SamAccountName $SAP_Global_Admin_QAS -GroupScope Global -Description "SAP test system Global Admin group" 
-# Add-ADGroupMember -Identity $SAP_Global_Admin_QAS -Members $SAP_ADM_QAS,$SAP_Service_QAS 
+New-ADGroup -Name $SAP_Global_Admin_QAS -GroupCategory Security -SamAccountName $SAP_Global_Admin_QAS -GroupScope Global -Description "SAP test system Global Admin group" 
+Add-ADGroupMember -Identity $SAP_Global_Admin_QAS -Members $SAP_ADM_QAS,$SAP_Service_QAS 
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
