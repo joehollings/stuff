@@ -1,0 +1,31 @@
+name: 'Terraform Format'
+on:
+  pull_request:
+env:
+  tf_version: 'latest'
+  tf_working_dir: '.'
+jobs:
+  terraform:
+    name: 'Terraform Format'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: tflint
+        uses: reviewdog/action-tflint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          working_directory: ${{ env.tf_working_dir }} # Optional. Change working directory
+          reporter: github-pr-review # Optional. Change reporter
+          fail_on_error: "false" # Optional. Fail action if errors are found
+          filter_mode: "nofilter" # Optional. Check all files, not just the diff
+          #tflint_version: "v0.24.0" # Optional. Custom version, instead of latest
+          tflint_rulesets: "azurerm" # Optional. Extra official rulesets to install
+          flags: "--call-module-type=all" # Optional. Add custom tflint flags
+          
